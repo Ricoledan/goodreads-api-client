@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios'
 import dotenv from 'dotenv'
+import xml2js from 'xml2js'
+
 dotenv.config()
 
 const HTTPClient = axios.create({
@@ -9,23 +12,29 @@ const HTTPClient = axios.create({
   baseURL: 'https://www.goodreads.com/',
 })
 
-const search = (name: string) => {
+const search = (name: string, page = 1) => {
   HTTPClient({
     url: '/search/index.xml',
     params: {
       key: process.env.API_KEY,
       q: `${name}`,
+      page: page,
     },
   })
-    .then((response: any) =>
-      console.log({
-        // xml_response: response.data,
-        full_data: response,
-      })
-    )
-    .catch((error: any) => {
-      return error.response
+    .then((response: any) => transformXml(response.data))
+    .catch((error) => {
+      error.response
     })
 }
 
-console.log(search('game of thrones'))
+// Parses XML response and transforms it into JSON
+const transformXml = (xml: any) => {
+  xml2js.parseString(xml, (err, output) => {
+    return console.log(
+      JSON.stringify(output.GoodreadsResponse.search[0].results)
+    )
+  })
+}
+
+console.log(search('game of thrones', 1))
+export { search }
