@@ -5,6 +5,8 @@ import axios from 'axios'
 import dotenv from 'dotenv'
 import xml2js from 'xml2js'
 
+import { Book } from './types'
+
 dotenv.config()
 
 const HTTPClient = axios.create({
@@ -31,10 +33,10 @@ const search = (name: string, page = 1) => {
 const transformXml = (xml: any) => {
   xml2js.parseString(xml, (err, output) => {
     return console.log(
-      JSON.stringify(output.GoodreadsResponse.search[0].results)
+      JSON.stringify(output.GoodreadsResponse.search[0].results, null, 1)
     )
   })
 }
 
-console.log(search('game of thrones', 1))
+console.log(search('Harry Potter', 1))
 export { search }
