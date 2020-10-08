@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios'
 import dotenv from 'dotenv'
 import xml2js from 'xml2js'
@@ -23,7 +21,7 @@ const search = (name: string, page = 1) => {
       page: page,
     },
   })
-    .then((response: any) => transformXml(response.data))
+    .then((response) => transformXml(response.data))
     .catch((error) => {
       error.response
     })
@@ -47,9 +45,8 @@ const transformXml = (xml: any) => {
       }
       return obj
     }
-    return console.log(getValues(jsonOutput))
+    return getValues(jsonOutput)
   })
 }
 
-search('Octavia E. Butler')
 export { search }
