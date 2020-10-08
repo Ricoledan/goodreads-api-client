@@ -25,16 +25,15 @@ const search = (name: string, page = 1) => {
     .catch((error) => {
       error.response
     })
-}
 
-const transformXml = (xml: any) => {
-  xml2js.parseString(xml, (err, output) => {
-    const jsonOutput = output.GoodreadsResponse.search[0].results[0].work
+  function transformXml(xml: any) {
+    let jsonOutput: any, i: number
+    const obj: Book[] = []
 
-    function getValues(json: any): Book {
-      let i: number
-      const obj: any = []
-      for (i = 0; i < json.length; i++) {
+    xml2js.parseString(xml, (err, output) => {
+      jsonOutput = output.GoodreadsResponse.search[0].results[0].work
+
+      for (i = 0; i < jsonOutput.length; i++) {
         obj.push({
           title: jsonOutput[i].best_book[0].title[0],
           author: jsonOutput[i].best_book[0].author[0].name[0],
@@ -43,10 +42,8 @@ const transformXml = (xml: any) => {
           avg_rating: jsonOutput[i].average_rating[0],
         })
       }
-      return obj
-    }
-    return getValues(jsonOutput)
-  })
+    })
+    return obj
+  }
 }
-
 export { search }
