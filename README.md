@@ -1,6 +1,6 @@
 # goodreads-api-client
 
-📚 JavaScript Client for accessing GoodReads data
+📚 JavaScript Client for accessing goodreads data
 
 ## Documentation
 
@@ -11,9 +11,9 @@
 Provides book information and pagination info
 
 ```javascript
-search('Octavia E. Butler', 1)
+search('Octavia E. Butler')
 
-Request: GET / book
+Request: GET /search/index.xml
 Response: [
   {
     title: 'Kindred',
