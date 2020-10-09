@@ -4,7 +4,7 @@
 
 ## Documentation
 
-[GoodReads API Documentation](https://www.goodreads.com/api)
+[goodreads API Documentation](https://www.goodreads.com/api)
 
 ## Search
 
